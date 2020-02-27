@@ -5,35 +5,75 @@ using System.IO;
 
 namespace FileCopy
 {
-    public class CompareFIles
+    public class CompareFiles
     {
-        public class CompareFiles
+        const int BYTES_TO_READ = sizeof(Int64);
+        public static bool FilesAreEqual(FileInfo first, FileInfo second)
         {
-            const int BYTES_TO_READ = sizeof(Int64);
-            public static bool FilesAreEqual(FileInfo first, FileInfo second)
+            if (first.Length != second.Length)
+                return false;
+
+            int iterations = (int)Math.Ceiling((double)first.Length / BYTES_TO_READ);
+
+            using (FileStream fs1 = first.OpenRead())
+            using (FileStream fs2 = second.OpenRead())
             {
-                if (first.Length != second.Length)
-                    return false;
+                byte[] one = new byte[BYTES_TO_READ];
+                byte[] two = new byte[BYTES_TO_READ];
 
-                int iterations = (int)Math.Ceiling((double)first.Length / BYTES_TO_READ);
-
-                using (FileStream fs1 = first.OpenRead())
-                using (FileStream fs2 = second.OpenRead())
+                for (int i = 0; i < iterations; i++)
                 {
-                    byte[] one = new byte[BYTES_TO_READ];
-                    byte[] two = new byte[BYTES_TO_READ];
+                    fs1.Read(one, 0, BYTES_TO_READ);
+                    fs2.Read(two, 0, BYTES_TO_READ);
 
-                    for (int i = 0; i < iterations; i++)
+                    if (BitConverter.ToInt64(one, 0) != BitConverter.ToInt64(two, 0))
+                        return false;
+                }
+            }
+            Console.WriteLine("Copy: " + second.Directory + '\\' + second.Name);
+            return true;
+        }
+    }
+
+    public class RecursiveFileProcessor
+    {
+        public static void ProcessDirectory(string targetDirectory, FileInfo fileToFind)
+        {
+            try
+            {
+                string[] fileEntries = Directory.GetFiles(targetDirectory);
+                using (fileToFind.OpenRead())
+                {
+                    foreach (string fileName in fileEntries)
                     {
-                        fs1.Read(one, 0, BYTES_TO_READ);
-                        fs2.Read(two, 0, BYTES_TO_READ);
-
-                        if (BitConverter.ToInt64(one, 0) != BitConverter.ToInt64(two, 0))
-                            return false;
+                        FileInfo file = new FileInfo(fileName);
+                        CompareFiles.FilesAreEqual(fileToFind, file);
                     }
                 }
-                return true;
+
+                string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
+                foreach (string subdirectory in subdirectoryEntries)
+                    ProcessDirectory(subdirectory, fileToFind);
+            }
+            catch (System.UnauthorizedAccessException e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
+
+        public static void CheckAllFiles(string directoryName, FileInfo file_to_find)
+        {
+
+            if (Directory.Exists(directoryName))
+            {
+                ProcessDirectory(directoryName, file_to_find);
+            }
+            else
+            {
+                Console.WriteLine("{0} is not a valid directory.", directoryName);
+            }
+        }
+
+
     }
 }
