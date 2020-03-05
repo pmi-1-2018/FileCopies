@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using System.IO;
 
@@ -32,6 +33,19 @@ namespace FileCopy
             }
             Console.WriteLine("Copy: " + second.Directory + '\\' + second.Name);
             return true;
+        }
+
+
+
+        public static void AddInTable(Hashtable table, int fileSize, string filePath)
+        {
+            if (table.ContainsKey(fileSize))
+                ((List<string>)table[fileSize]).Add(filePath);
+            else
+            {
+                table.Add(fileSize, new List<string>());
+                ((List<string>)table[fileSize]).Add(filePath);
+            }
         }
     }
 
