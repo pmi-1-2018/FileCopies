@@ -6,7 +6,7 @@ namespace FileCopy
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            AllCopies.FindAllFiles();
         }
     }
 }
