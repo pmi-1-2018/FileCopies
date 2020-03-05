@@ -26,7 +26,7 @@ namespace FileCopy
             //DriveInfo[] allDrives = DriveInfo.GetDrives();
             //foreach (DriveInfo drive in allDrives)
             //{
-                ProcessAllFiles(@"C:\");
+                ProcessAllFiles(@"D:\");
 
             foreach (List<string> ls in table.Values)
             {
@@ -42,7 +42,11 @@ namespace FileCopy
                                 if(!equel.Contains(ls[i]))
                                     equel.Add(ls[i]);
                                 if (!equel.Contains(ls[j]))
+                                {
                                     equel.Add(ls[j]);
+                                    ls.RemoveAt(j);
+                                    j--;
+                                }
                                 
                             }
                         }
