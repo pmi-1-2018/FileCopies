@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace FileCopy
@@ -60,10 +56,8 @@ namespace FileCopy
             Console.WriteLine("Type the name of file: ");
             string name = Console.ReadLine();
             string path = $"{create}/{name}";
-            File.Create(path);
+            System.IO.File.Create(path);
             Console.WriteLine("File created!");
-
-
         }
         public void Execute(string command)
         {
