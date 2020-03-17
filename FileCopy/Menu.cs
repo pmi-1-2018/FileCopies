@@ -1,25 +1,27 @@
 ﻿using System;
 using System.IO;
 
+
 namespace FileCopy
 {
+    enum Commands
+    {
+        Help = 1,
+        Memory = 2,
+        Copies = 3,
+        Create_file = 4,
+        Exit = 0
+    }
     public class Menu
     {
-        private string[] commands =
-        {
-            "help",
-            "memory",
-            "copies",
-            "create_file",
-            "exit"
-        };
+        Type com = typeof(Commands);
 
         public void Help()
         {
             Console.WriteLine("List of commands: ");
-            foreach (var command in commands)
+            foreach (var command in Enum.GetNames(com))
             {
-                Console.WriteLine(command);
+                Console.WriteLine("{0,-11}= {1}", command, Enum.Format(com, Enum.Parse(com, command), "d"));
             }
         }
 
@@ -59,22 +61,22 @@ namespace FileCopy
             System.IO.File.Create(path);
             Console.WriteLine("File created!");
         }
-        public void Execute(string command)
+        public void Execute(int command)
         {
             switch (command)
             {
-                case "help":
+                case 1:
                     Help();
                     break;
-                case "memory":
+                case 2:
                     Memory();
                     break;
-                case "copies":
+                case 3:
                     break;
-                case "create_file":
+                case 4:
                     Create_File();
                     break;
-                case "exit":
+                case 0:
                     Console.WriteLine("Goodbye^_^");
                     break;
                 default:

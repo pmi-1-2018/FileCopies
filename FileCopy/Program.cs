@@ -8,15 +8,15 @@ namespace FileCopy
         static void Main(string[] args)
         {
             Menu menu = new Menu();
-            Console.WriteLine("Hello, user! Type command or \"help\" to see avaiable commands");
+            Console.WriteLine("Hello, user! Type number of command or \"1\" to see avaiable commands");
             var command = Console.ReadLine();
-            menu.Execute(command);
+            menu.Execute(Convert.ToInt32(command));
 
-            while (command != "exit")
+            while (Convert.ToInt32(command) != 0)
             {
                 Console.WriteLine("What's next?");
                 command = Console.ReadLine();
-                menu.Execute(command);
+                menu.Execute(Convert.ToInt32(command));
             }
             Thread.Sleep(1000);
         }
