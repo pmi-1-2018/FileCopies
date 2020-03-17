@@ -15,7 +15,7 @@ namespace FileCopy
     public class Menu
     {
         Type com = typeof(Commands);
-        AllCopies copies = new AllCopies();
+        //AllCopies copies = new AllCopies();
         public void Help()
         {
             Console.WriteLine("List of commands: ");
@@ -72,7 +72,7 @@ namespace FileCopy
                     Memory();
                     break;
                 case 3:  
-                    copies.FindAllFiles();
+                   // copies.FindAllFiles();
                     break;
                 case 4:
                     Create_File();
