@@ -10,7 +10,7 @@ namespace FileCopy
     class AllCopies
     {
         static Hashtable table = new Hashtable();
-        static List<List<string>> equelFiles = new List<List<string>>();
+        static List<List<string>> equalFiles = new List<List<string>>();
         static void AddInTable(long fileSize, string filePath)
         {
             if (table.ContainsKey(fileSize))
@@ -27,49 +27,56 @@ namespace FileCopy
             //DriveInfo[] allDrives = DriveInfo.GetDrives();
             //foreach (DriveInfo drive in allDrives)
             //{
+            Console.Clear();
+            string dir;
+            Console.WriteLine("Write directory you want to find copies in : ");
+            dir = Console.ReadLine();
             var watch = Stopwatch.StartNew();
-              ProcessAllFiles(@"D:\PostgreSQL\");
+            ProcessAllFiles(@"" + dir);
             watch.Stop();
             Console.WriteLine($"ProcessAll... {watch.ElapsedMilliseconds} ms");
-
             watch.Restart();
+            watch.Restart();
+            int n = table.Count;
+            var files = new List<string>[n];
+            table.Values.CopyTo(files, 0);
             long count = 0;
-            foreach (List<string> ls in table.Values)
+            for (int i = 0; i < n; i++)
             {
-                if (!ls.Count.Equals(1))
+                if (!files[i].Count.Equals(1))
                 {
-                    List<string> equel = new List<string>();
-                    for (int i = 0; i < ls.Count; i++)
+                    List<string> equal = new List<string>();
+                    for (int k = 0; k < files[i].Count; k++)
                     {
-                        for (int j = i+1; j < ls.Count; j++)
+                        for (int j = k + 1; j < files[i].Count; j++)
                         {
-                            
-                            if (CompareFiles.FilesAreEqual(new FileInfo(ls[i]), new FileInfo(ls[j])))
+
+                            if (CompareFiles.FilesAreEqual(new FileInfo(files[i][k]), new FileInfo(files[i][j])))
                             {
                                 count++;
-                                if (!equel.Contains(ls[i]))
-                                    equel.Add(ls[i]);
-                                if (!equel.Contains(ls[j]))
+                                if (!equal.Contains(files[i][k]))
+                                    equal.Add(files[i][k]);
+                                if (!equal.Contains(files[i][j]))
                                 {
-                                    equel.Add(ls[j]);
-                                    ls.RemoveAt(j);
+                                    equal.Add(files[i][j]);
+                                    files[i].RemoveAt(j);
                                     j--;
                                 }
-                                
+
                             }
                         }
                     }
-                    if(!equel.Count.Equals(0))
-                        equelFiles.Add(equel);
+                    if (!equal.Count.Equals(0))
+                        equalFiles.Add(equal);
 
                 }
-                
+
             }
             watch.Stop();
             Console.WriteLine($"Compare... {watch.ElapsedMilliseconds} ms");
             Console.WriteLine(count);
 
-            foreach (List<string> res_ls in equelFiles)
+            foreach (List<string> res_ls in equalFiles)
             {
                 Console.WriteLine("----------------------------------------------------------------------------------------------------------------------------------------");
                 for (int i = 0; i < res_ls.Count; i++)
@@ -90,7 +97,7 @@ namespace FileCopy
                 foreach (string fileName in fileEntries)
                 {
                     FileInfo file = new FileInfo(fileName);
-                    AddInTable(file.Length,file.DirectoryName+"\\"+file.Name);
+                    AddInTable(file.Length,file.DirectoryName+"\\" + file.Name);
                 }
 
                 string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
