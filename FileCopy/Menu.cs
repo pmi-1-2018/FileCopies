@@ -8,8 +8,9 @@ namespace FileCopy
     {
         Help = 1,
         Memory = 2,
-        Copies = 3,
-        Create_file = 4,
+        AllCopies = 3,
+        CopiesInDefinedDirectory = 4,
+        Create_file = 5,
         Exit = 0
     }
     public class Menu
@@ -71,9 +72,12 @@ namespace FileCopy
                     Memory();
                     break;
                 case 3:
-                    AllCopies.FindAllFiles();
+                    AllCopies.FindAllFiles(3);
                     break;
                 case 4:
+                    AllCopies.FindAllFiles(4);
+                    break;
+                case 5:
                     Create_File();
                     break;
                 case 0:

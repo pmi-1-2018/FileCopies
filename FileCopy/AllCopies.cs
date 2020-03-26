@@ -22,20 +22,27 @@ namespace FileCopy
             }
         }
 
-        public static void FindAllFiles()
+        public static void FindAllFiles(int command)
         {
-            //DriveInfo[] allDrives = DriveInfo.GetDrives();
-            //foreach (DriveInfo drive in allDrives)
-            //{
             Console.Clear();
-            string dir;
-            Console.WriteLine("Write directory you want to find copies in : ");
-            dir = Console.ReadLine();
             var watch = Stopwatch.StartNew();
-            ProcessAllFiles(@"" + dir);
+            if (command == 3)
+            {
+                DriveInfo[] allDrives = DriveInfo.GetDrives();
+                foreach (DriveInfo drive in allDrives)
+                {
+                    ProcessAllFiles(drive.Name);
+                }
+            }
+            if (command == 4)
+            {
+                string dir;
+                Console.WriteLine("Write directory you want to find copies in : ");
+                dir = Console.ReadLine();
+                ProcessAllFiles(@"" + dir+"\\");
+            }
             watch.Stop();
             Console.WriteLine($"ProcessAll... {watch.ElapsedMilliseconds} ms");
-            watch.Restart();
             watch.Restart();
             int n = table.Count;
             var files = new List<string>[n];
