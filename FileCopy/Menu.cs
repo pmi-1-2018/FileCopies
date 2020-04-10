@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
+
 
 
 namespace FileCopy
@@ -16,6 +18,23 @@ namespace FileCopy
     public class Menu
     {
         Type com = typeof(Commands);
+
+
+        public void DrawMenu()
+        {
+            Console.Clear();
+            string command = "1";
+            while (Convert.ToInt32(command) != 0)
+            {
+                Console.WriteLine("\nType a number of next command");
+                Help();
+                command = Console.ReadLine();
+                Console.Clear();
+                Execute(Convert.ToInt32(command));
+            }
+            Thread.Sleep(1000);
+        }
+
         public void Help()
         {
             Console.WriteLine("List of commands: ");

@@ -95,6 +95,16 @@ namespace FileCopy
             }
             Console.WriteLine($"Compare... {watch.ElapsedMilliseconds} ms");
             Console.WriteLine(count);
+            Console.WriteLine("\n\n If you want to quit press q\n if you want to return to the menu press any other button");
+            var c = Console.ReadKey();
+            if (c.KeyChar == 'q')
+            {
+                Console.Clear();
+                Console.WriteLine("Goodbye^_^");
+                Environment.Exit(0);
+            }
+            Menu menu = new Menu();
+            menu.DrawMenu();
         }
         static void ProcessAllFiles(string targetDirectory)
         {
