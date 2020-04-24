@@ -22,11 +22,10 @@ namespace FileCopy
 
         public void DrawMenu()
         {
-            Console.Clear();
             string command = "1";
             while (Convert.ToInt32(command) != 0)
             {
-                Console.WriteLine("\nType a number of next command");
+                Console.Clear();
                 Help();
                 command = Console.ReadLine();
                 Console.Clear();
@@ -37,6 +36,7 @@ namespace FileCopy
 
         public void Help()
         {
+            Console.WriteLine("Type a number of the command");
             Console.WriteLine("List of commands: ");
             foreach (var command in Enum.GetNames(com))
             {
@@ -67,6 +67,8 @@ namespace FileCopy
                     Console.WriteLine(
                         "  Total size of drive:            {0, 15} bytes ",
                         d.TotalSize);
+                    Console.WriteLine("Press any key to return to the menu.");
+                    Console.ReadKey();
                 }
             }
         }
@@ -79,6 +81,8 @@ namespace FileCopy
             string path = $"{create}/{name}";
             System.IO.File.Create(path);
             Console.WriteLine("File created!");
+            Console.WriteLine("Press any key to return to the menu.");
+            Console.ReadKey();
         }
         public void Execute(int command)
         {
@@ -101,6 +105,7 @@ namespace FileCopy
                     break;
                 case 0:
                     Console.WriteLine("Goodbye^_^");
+                    Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("Unknown command");

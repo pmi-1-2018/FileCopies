@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Diagnostics;
 
@@ -39,7 +38,7 @@ namespace FileCopy
                 string dir;
                 Console.WriteLine("Write directory you want to find copies in : ");
                 dir = Console.ReadLine();
-                ProcessAllFiles(@"" + dir+"\\");
+                ProcessAllFiles(@"" + dir + "\\");
             }
             watch.Stop();
             Console.WriteLine($"ProcessAll... {watch.ElapsedMilliseconds} ms");
@@ -81,7 +80,7 @@ namespace FileCopy
             }
             watch.Stop();
             Console.WriteLine($"Compare... {watch.ElapsedMilliseconds} ms");
-            Console.WriteLine(count);
+            Console.WriteLine("Found " + Convert.ToString(count) + " copies");
 
             foreach (List<string> res_ls in equalFiles)
             {
@@ -114,7 +113,7 @@ namespace FileCopy
                 foreach (string fileName in fileEntries)
                 {
                     FileInfo file = new FileInfo(fileName);
-                    AddInTable(file.Length,file.DirectoryName+"\\" + file.Name);
+                    AddInTable(file.Length,file.DirectoryName + "\\" + file.Name);
                 }
 
                 string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
@@ -125,8 +124,6 @@ namespace FileCopy
             {
                 Console.WriteLine(e.Message);
             }
-
-
         }
 
     }
