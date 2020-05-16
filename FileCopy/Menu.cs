@@ -67,10 +67,10 @@ namespace FileCopy
                     Console.WriteLine(
                         "  Total size of drive:            {0, 15} bytes ",
                         d.TotalSize);
-                    Console.WriteLine("Press any key to return to the menu.");
-                    Console.ReadKey();
                 }
             }
+            Console.WriteLine("Press any key to return to the menu.");
+            Console.ReadKey();
         }
         public void Create_File()
         {
