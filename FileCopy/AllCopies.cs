@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Security.Permissions;
+using System.Security;
 
 namespace FileCopy
 {
@@ -110,19 +112,33 @@ namespace FileCopy
             try
             {
                 string[] fileEntries = Directory.GetFiles(targetDirectory);
+                //FileIOPermission permission;
                 foreach (string fileName in fileEntries)
                 {
                     FileInfo file = new FileInfo(fileName);
-                    AddInTable(file.Length,file.DirectoryName + "\\" + file.Name);
+                    //permission = new FileIOPermission(FileIOPermissionAccess.Read, file.DirectoryName);
+                    //if (SecurityManager.IsGranted(permission))
+                        AddInTable(file.Length, file.DirectoryName + "\\" + file.Name);
                 }
 
                 string[] subdirectoryEntries = Directory.GetDirectories(targetDirectory);
                 foreach (string subdirectory in subdirectoryEntries)
+                {
+                    
                     ProcessAllFiles(subdirectory);
+                }
             }
             catch (System.UnauthorizedAccessException e)
             {
                 Console.WriteLine(e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch
+            {
+                Console.WriteLine("Something goes wrong");
             }
         }
 

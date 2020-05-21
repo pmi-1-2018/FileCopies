@@ -89,6 +89,14 @@ namespace FileCopy
             {
                 Console.WriteLine(e.Message);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch
+            {
+                Console.WriteLine("Something goes wrong");
+            }
         }
 
         public static void CheckAllFiles(string directoryName, FileInfo file_to_find)

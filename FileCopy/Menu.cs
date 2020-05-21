@@ -22,14 +22,14 @@ namespace FileCopy
 
         public void DrawMenu()
         {
-            string command = "1";
+            char command = '1';
             while (Convert.ToInt32(command) != 0)
             {
                 Console.Clear();
                 Help();
-                command = Console.ReadLine();
+                command = Console.ReadKey().KeyChar;
                 Console.Clear();
-                Execute(Convert.ToInt32(command));
+                Execute(command);
             }
             Thread.Sleep(1000);
         }
@@ -84,26 +84,26 @@ namespace FileCopy
             Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
-        public void Execute(int command)
+        public void Execute(char command)
         {
             switch (command)
             {
-                case 1:
+                case '1':
                     Help();
                     break;
-                case 2:
+                case '2':
                     Memory();
                     break;
-                case 3:
+                case '3':
                     AllCopies.FindAllFiles(3);
                     break;
-                case 4:
+                case '4':
                     AllCopies.FindAllFiles(4);
                     break;
-                case 5:
+                case '5':
                     Create_File();
                     break;
-                case 0:
+                case '0':
                     Console.WriteLine("Goodbye^_^");
                     Environment.Exit(0);
                     break;
