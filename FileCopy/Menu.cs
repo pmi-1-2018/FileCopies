@@ -13,6 +13,7 @@ namespace FileCopy
         AllCopies = 3,
         CopiesInDefinedDirectory = 4,
         Create_file = 5,
+        Delete_file = 6,
         Exit = 0
     }
     public class Menu
@@ -74,16 +75,40 @@ namespace FileCopy
         }
         public void Create_File()
         {
-            Console.WriteLine("Type the way to file: ");
+            Console.WriteLine("Type the path to the file: ");
             var create = Console.ReadLine();
-            Console.WriteLine("Type the name of file: ");
+            Console.WriteLine("Type the name of the file: ");
             string name = Console.ReadLine();
             string path = $"{create}/{name}";
-            System.IO.File.Create(path);
-            Console.WriteLine("File created!");
+            try
+            {
+                System.IO.File.Create(path);
+                Console.WriteLine("File created!");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Incorrect file path");
+            }
             Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
+        public void Delete_File()
+        {
+            Console.WriteLine("Type the full path to the file: ");
+            string file = Console.ReadLine();
+            try
+            {
+                System.IO.File.Delete(file);
+                Console.WriteLine("File deleted!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Incorrect file path");
+            }
+            Console.WriteLine("Press any key to return to the menu.");
+            Console.ReadKey();
+        }
+
         public void Execute(char command)
         {
             switch (command)
@@ -102,6 +127,9 @@ namespace FileCopy
                     break;
                 case '5':
                     Create_File();
+                    break;
+                case '6':
+                    Delete_File();
                     break;
                 case '0':
                     Console.WriteLine("Goodbye^_^");
