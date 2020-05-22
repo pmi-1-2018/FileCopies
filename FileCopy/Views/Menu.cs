@@ -40,10 +40,10 @@ namespace FileCopy
         public void Help()
         {
             Console.WriteLine("Type a number of the command");
-            Console.WriteLine("List of commands: ");
+            Console.WriteLine("Commands: ");
             foreach (var command in Enum.GetNames(com))
             {
-                Console.WriteLine("{0,-11}= {1}", command, Enum.Format(com, Enum.Parse(com, command), "d"));
+                Console.WriteLine("{1}. {0}", command, Enum.Format(com, Enum.Parse(com, command), "d"));
             }
         }
 
@@ -114,17 +114,25 @@ namespace FileCopy
         {
             Console.WriteLine("Type the way to file: ");
             string path = $"{Console.ReadLine()}";
-            FileInfo fileInf = new FileInfo(path);
-            if (fileInf.Exists)
+            try
             {
-                Console.WriteLine("File name is : {0}", fileInf.Name);
-                Console.WriteLine("Creation time: {0}", fileInf.CreationTime);
-                Console.WriteLine("Size: {0}", fileInf.Length);
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
+                {
+                    Console.WriteLine("File name is : {0}", fileInf.Name);
+                    Console.WriteLine("Creation time: {0}", fileInf.CreationTime);
+                    Console.WriteLine("Size: {0}", fileInf.Length);
+                }
+                else
+                {
+                    Console.WriteLine("File with that name doesn't exists, try again");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("File with that name doesn't exists, try again");
+                Console.WriteLine("Incorrect file path");
             }
+            Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
 
@@ -134,16 +142,24 @@ namespace FileCopy
             string path = $"{Console.ReadLine()}";
             Console.WriteLine("Type new way to file: ");
             string newPath = $"{Console.ReadLine()}";
-            FileInfo fileInf = new FileInfo(path);
-            if (fileInf.Exists)
+            try
             {
-                fileInf.MoveTo(newPath);
-                Console.WriteLine("Operation was successfully completed!");
+                FileInfo fileInf = new FileInfo(path);
+                if (fileInf.Exists)
+                {
+                    fileInf.MoveTo(newPath);
+                    Console.WriteLine("Operation was successfully completed!");
+                }
+                else
+                {
+                    Console.WriteLine("Something go wrong, please try again");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("Something go wrong, please try again");
+                Console.WriteLine(e.Message);
             }
+            Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
         public void Execute(char command)
