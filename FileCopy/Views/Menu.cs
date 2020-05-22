@@ -10,13 +10,13 @@ namespace FileCopy
     {
         Help = 1,
         Memory = 2,
-        AllCopies = 3,
-        CopiesInDefinedDirectory = 4,
+        Scan_whole_computer_and_find_copies = 3,
+        Find_all_copies_in_defined_directory = 4,
         Create_file = 5,
         Delete_file = 6,
         File_info = 7,
         Move_file = 8,
-        Find_Your_File_Copies=9,
+        Find_copies_of_a_file = 9,
         Exit = 0
     }
     public class Menu
