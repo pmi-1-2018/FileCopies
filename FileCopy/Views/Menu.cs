@@ -14,6 +14,8 @@ namespace FileCopy
         CopiesInDefinedDirectory = 4,
         Create_file = 5,
         Delete_file = 6,
+        File_info = 7,
+        Move_file = 8,
         Exit = 0
     }
     public class Menu
@@ -108,7 +110,42 @@ namespace FileCopy
             Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
+        public void File_info()
+        {
+            Console.WriteLine("Type the way to file: ");
+            string path = $"{Console.ReadLine()}";
+            FileInfo fileInf = new FileInfo(path);
+            if (fileInf.Exists)
+            {
+                Console.WriteLine("File name is : {0}", fileInf.Name);
+                Console.WriteLine("Creation time: {0}", fileInf.CreationTime);
+                Console.WriteLine("Size: {0}", fileInf.Length);
+            }
+            else
+            {
+                Console.WriteLine("File with that name doesn't exists, try again");
+            }
+            Console.ReadKey();
+        }
 
+        public void Move_file()
+        {
+            Console.WriteLine("Type the way to file: ");
+            string path = $"{Console.ReadLine()}";
+            Console.WriteLine("Type new way to file: ");
+            string newPath = $"{Console.ReadLine()}";
+            FileInfo fileInf = new FileInfo(path);
+            if (fileInf.Exists)
+            {
+                fileInf.MoveTo(newPath);
+                Console.WriteLine("Operation was successfully completed!");
+            }
+            else
+            {
+                Console.WriteLine("Something go wrong, please try again");
+            }
+            Console.ReadKey();
+        }
         public void Execute(char command)
         {
             switch (command)
@@ -130,6 +167,12 @@ namespace FileCopy
                     break;
                 case '6':
                     Delete_File();
+                    break;
+                case '7':
+                    File_info();
+                    break;
+                case '8':
+                    Move_file();
                     break;
                 case '0':
                     Console.WriteLine("Goodbye^_^");
