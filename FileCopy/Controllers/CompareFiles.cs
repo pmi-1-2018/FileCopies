@@ -33,7 +33,6 @@ namespace FileCopy
                             return false;
                     }
                 }
-                //Console.WriteLine("Copy: " + second.Directory + '\\' + second.Name);
                 return true;
             }
             catch (System.IO.FileNotFoundException  e)
@@ -53,10 +52,6 @@ namespace FileCopy
                 Console.WriteLine(e.Message);
             }
             return false;
-            //finally
-            //{
-            //    return false;
-            //}
         }
 
 

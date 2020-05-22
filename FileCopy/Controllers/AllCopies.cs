@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
-using System.Security.Permissions;
-using System.Security;
 
 namespace FileCopy
 {
@@ -81,7 +79,6 @@ namespace FileCopy
 
             }
             watch.Stop();
-            //Console.WriteLine("Found " + Convert.ToString(count) + " copies");
 
             foreach (List<string> res_ls in equalFiles)
             {
@@ -111,12 +108,9 @@ namespace FileCopy
             try
             {
                 string[] fileEntries = Directory.GetFiles(targetDirectory);
-                //FileIOPermission permission;
                 foreach (string fileName in fileEntries)
                 {
                     FileInfo file = new FileInfo(fileName);
-                    //permission = new FileIOPermission(FileIOPermissionAccess.Read, file.DirectoryName);
-                    //if (SecurityManager.IsGranted(permission))
                         AddInTable(file.Length, file.DirectoryName + "\\" + file.Name);
                 }
 
