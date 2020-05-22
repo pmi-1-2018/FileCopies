@@ -43,7 +43,7 @@ namespace FileCopy
                 ProcessAllFiles(@"" + dir + "\\");
             }
             watch.Stop();
-            Console.WriteLine($"ProcessAll... {watch.ElapsedMilliseconds} ms");
+            Console.WriteLine($"Scanning lasted {watch.ElapsedMilliseconds/Math.Pow(10,5)} minutes");
             watch.Restart();
             int n = table.Count;
             var files = new List<string>[n];
@@ -81,8 +81,7 @@ namespace FileCopy
 
             }
             watch.Stop();
-            Console.WriteLine($"Compare... {watch.ElapsedMilliseconds} ms");
-            Console.WriteLine("Found " + Convert.ToString(count) + " copies");
+            //Console.WriteLine("Found " + Convert.ToString(count) + " copies");
 
             foreach (List<string> res_ls in equalFiles)
             {
@@ -94,8 +93,8 @@ namespace FileCopy
 
                 Console.WriteLine("----------------------------------------------------------------------------------------------------------------------------------------");
             }
-            Console.WriteLine($"Compare... {watch.ElapsedMilliseconds} ms");
-            Console.WriteLine(count);
+            Console.WriteLine($"Finding copies and comparing files lasted {watch.ElapsedMilliseconds / Math.Pow(10, 5)} minutes");
+            Console.WriteLine("Found " + Convert.ToString(count) + " copies");
             Console.WriteLine("\n\n If you want to quit press q\n if you want to return to the menu press any other button");
             var c = Console.ReadKey();
             if (c.KeyChar == 'q')
