@@ -75,6 +75,7 @@ namespace FileCopy
 
     public class RecursiveFileProcessor
     {
+        private static List<string> copies = new List<string>();
         public static void ProcessDirectory(string targetDirectory, FileInfo fileToFind)
         {
             try
@@ -85,7 +86,8 @@ namespace FileCopy
                     foreach (string fileName in fileEntries)
                     {
                         FileInfo file = new FileInfo(fileName);
-                        CompareFiles.FilesAreEqual(fileToFind, file);
+                        if (CompareFiles.FilesAreEqual(fileToFind, file))
+                            copies.Add($"{file.Directory.FullName}\\{file.Name}");
                     }
                 }
 
@@ -95,7 +97,7 @@ namespace FileCopy
             }
             catch (System.UnauthorizedAccessException e)
             {
-                Console.WriteLine(e.Message);
+                //Console.WriteLine(e.Message);
             }
             catch (Exception e)
             {
@@ -107,17 +109,23 @@ namespace FileCopy
             }
         }
 
-        public static void CheckAllFiles(string directoryName, FileInfo file_to_find)
+        private static void printAllCopies()
         {
+            for (int i = 0; i<copies.Count; i++)
+			{
+                Console.WriteLine($"{i+1}. {copies[i]}");
+			}
+        }
+        public static void Find_One_File_Copies(string fileName)
+        {
+            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            FileInfo file_to_find = new FileInfo(fileName);
+            foreach (DriveInfo drive in allDrives)
+            {
+                ProcessDirectory(drive.Name, file_to_find);
+            }
 
-            if (Directory.Exists(directoryName))
-            {
-                ProcessDirectory(directoryName, file_to_find);
-            }
-            else
-            {
-                Console.WriteLine("{0} is not a valid directory.", directoryName);
-            }
+            printAllCopies();
         }
 
 

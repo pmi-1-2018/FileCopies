@@ -16,6 +16,7 @@ namespace FileCopy
         Delete_file = 6,
         File_info = 7,
         Move_file = 8,
+        Find_Your_File_Copies=9,
         Exit = 0
     }
     public class Menu
@@ -162,6 +163,22 @@ namespace FileCopy
             Console.WriteLine("Press any key to return to the menu.");
             Console.ReadKey();
         }
+        public void Find_Your_File_Copies()
+        {
+            Console.WriteLine("Type the full path to the file: ");
+            string file = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Copies:");
+                RecursiveFileProcessor.Find_One_File_Copies(file);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            Console.WriteLine("Press any key to return to the menu.");
+            Console.ReadKey();
+        }
         public void Execute(char command)
         {
             switch (command)
@@ -189,6 +206,9 @@ namespace FileCopy
                     break;
                 case '8':
                     Move_file();
+                    break;
+                case '9':
+                    Find_Your_File_Copies();
                     break;
                 case '0':
                     Console.WriteLine("Goodbye^_^");
